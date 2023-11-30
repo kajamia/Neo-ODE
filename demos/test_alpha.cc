@@ -1,7 +1,12 @@
+#include <iostream>
+#include <memory>
+
 #include <nonlinfunc.h>
 #include <ode.h>
 
 using namespace ASC_ode;
+using namespace ASC_bla;
+using namespace std;
 
 // the pendulum with a length constraint
 

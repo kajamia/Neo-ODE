@@ -1,7 +1,13 @@
+#include <iostream>
+#include <cmath>
+
 #include <nonlinfunc.h>
 #include <ode.h>
+#include <vector.h>
 
 using namespace ASC_ode;
+using namespace ASC_bla;
+using namespace std;
 
 
 class MassSpring : public NonlinearFunction

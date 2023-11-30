@@ -3,7 +3,7 @@
 
 #include <functional>
 #include <exception>
-#include <calcinverse.hpp>
+#include <memory>
 
 #include "Newton.h"
 
@@ -28,7 +28,7 @@ namespace ASC_ode
       {
         NewtonSolver (equ, y);
         yold->Set(y);
-        t += dt * tmp;
+        t += dt;
         if (callback) callback(t, y);
       }
   }
@@ -126,7 +126,7 @@ namespace ASC_ode
         xold->Set(x);
         vold->Set(v);
         aold->Set(a);
-        t += dt * tmp;
+        t += dt;
         if (callback) callback(t, x);
       }
     dx = v;

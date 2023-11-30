@@ -1,13 +1,16 @@
 #ifndef NONLINFUNC_H
 #define NONLINFUNC_H
 
+#include <memory>
+
 #include <vector.h>
 #include <matrix.h>
 
 
 namespace ASC_ode
 {
-  using namespace ngbla;
+  using namespace ASC_bla;
+  using namespace std;
 
   class NonlinearFunction
   {
