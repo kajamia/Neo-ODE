@@ -17,16 +17,18 @@ namespace ASC_ode
                    std::function<void(double,VectorView<double>)> callback = nullptr)
   {
     double dt = tend/steps;
+
     auto yold = make_shared<ConstantFunction>(y);
     auto ynew = make_shared<IdentityFunction>(y.Size());
     auto equ = ynew-yold - dt * rhs;
 
     double t = 0;
+
     for (int i = 0; i < steps; i++)
       {
         NewtonSolver (equ, y);
         yold->Set(y);
-        t += dt;
+        t += dt * tmp;
         if (callback) callback(t, y);
       }
   }
@@ -56,6 +58,7 @@ namespace ASC_ode
     auto xold = make_shared<ConstantFunction>(x);
     auto vold = make_shared<ConstantFunction>(dx);
     auto aold = make_shared<ConstantFunction>(x);
+
     rhs->Evaluate (xold->Get(), aold->Get());
     
     auto anew = make_shared<IdentityFunction>(a.Size());
@@ -123,7 +126,7 @@ namespace ASC_ode
         xold->Set(x);
         vold->Set(v);
         aold->Set(a);
-        t += dt;
+        t += dt * tmp;
         if (callback) callback(t, x);
       }
     dx = v;

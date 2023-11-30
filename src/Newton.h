@@ -2,6 +2,7 @@
 #define Newton_h
 
 #include "nonlinfunc.h"
+#include "matrix.hpp"
 
 namespace ASC_ode
 {
@@ -18,7 +19,7 @@ namespace ASC_ode
         func->Evaluate(x, res);
         // cout << "|res| = " << L2Norm(res) << endl;
         func->EvaluateDeriv(x, fprime);
-        CalcInverse(fprime);
+        Inverse(fprime);
         x -= fprime*res;
 
         double err= L2Norm(res);

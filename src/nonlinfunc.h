@@ -1,8 +1,8 @@
 #ifndef NONLINFUNC_H
 #define NONLINFUNC_H
 
-#include <vector.hpp>
-#include <matrix.hpp>
+#include <vector.h>
+#include <matrix.h>
 
 
 namespace ASC_ode
