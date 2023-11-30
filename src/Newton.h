@@ -2,7 +2,7 @@
 #define Newton_h
 
 #include "nonlinfunc.h"
-#include "matrix.h"
+#include "matrix.hpp"
 
 namespace ASC_ode
 {
