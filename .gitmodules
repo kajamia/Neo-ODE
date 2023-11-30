@@ -1,0 +1,3 @@
+[submodule "Neo-CLA"]
+	path = Neo-CLA
+	url = https://github.com/kajamia/Neo-CLA.git
