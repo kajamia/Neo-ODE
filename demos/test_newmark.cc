@@ -3,8 +3,8 @@
 #include <nonlinfunc.h>
 #include <ode.h>
 
-using namespace ASC_ode;
-using namespace ASC_bla;
+using namespace Neo_ODE;
+using namespace Neo_CLA;
 using namespace std;
 
 class RHS : public NonlinearFunction

@@ -6,7 +6,7 @@
 #include <nonlinfunc.h>
 #include <ode.h>
 
-using namespace ASC_ode;
+using namespace Neo_ODE;
 
 #include <vector.hpp>
 using namespace ngbla;

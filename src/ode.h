@@ -8,7 +8,7 @@
 #include "Newton.h"
 
 
-namespace ASC_ode
+namespace Neo_ODE
 {
   
   // implicit Euler method for dy/dt = rhs(y)

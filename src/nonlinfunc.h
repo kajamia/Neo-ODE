@@ -7,9 +7,9 @@
 #include <matrix.h>
 
 
-namespace ASC_ode
+namespace Neo_ODE
 {
-  using namespace ASC_bla;
+  using namespace Neo_CLA;
   using namespace std;
 
   class NonlinearFunction
