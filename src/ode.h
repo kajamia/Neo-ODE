@@ -34,7 +34,63 @@ namespace Neo_ODE
   }
 
   
+  // explicit Euler method for dy/dt = rhs(y)
+  void SolveODE_EE(double tend, int steps,
+                   VectorView<double> y, shared_ptr<NonlinearFunction> rhs,
+                   std::function<void(double, VectorView<double>)> callback = nullptr)
+  {
+    double dt = tend/steps;
+    if (rhs->DimX() != y.Size() || rhs->DimX() != y.Size()){throw invalid_argument("rhs does not have the right dimensions"); }
 
+    double t = 0;
+    Vector<double> tmp(y.Size());
+
+    for (int i = 0; i < steps; i++)
+    {
+      y(0) = t;
+      rhs->Evaluate(y, tmp);
+      y = y + dt*tmp;
+
+      t += dt;
+      if (callback) callback(t, y);
+    }
+  }
+
+
+  void SolveODE_CN(double tend, int steps,
+                   VectorView<double> y, shared_ptr<NonlinearFunction> rhs,
+                   std::function<void(double, VectorView<double>)> callback = nullptr)
+  {
+    // h
+    double dt = tend/steps;
+    double t = 0;
+
+    // f(t_i, y_i)
+    Vector<double> tmp(y.Size());
+    auto tmpfunc = make_shared<ConstantFunction>(tmp);
+
+    // set up equation
+    auto yold = make_shared<ConstantFunction>(y); // y_i
+    auto ynew = make_shared<IdentityFunction>(y.Size()); // y_{i+1}
+    auto equ = ynew-yold - (dt/2) * (tmpfunc + rhs);
+
+    for (int i = 0; i < steps; i++)
+    { 
+      // calculate f(t_i, y_i)
+      rhs->Evaluate(y, tmp);
+      tmp *= dt;
+      tmp += y;
+
+      // set up equation
+      equ = ynew-yold - (dt/2) * (tmpfunc + rhs);
+      // solve equation
+      NewtonSolver (equ, y);
+      yold->Set(y);
+
+      t += dt;
+      if (callback) callback(t, y);
+    }
+  }
   
   
   

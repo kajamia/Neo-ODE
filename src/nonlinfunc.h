@@ -49,6 +49,7 @@ namespace Neo_ODE
     Vector<> val;
   public:
     ConstantFunction (VectorView<double> _val) : val(_val) { }
+    ConstantFunction (double _val, int dim = 1) : val(dim) { val = _val; }
     void Set(VectorView<double> _val) { val = _val; }
     VectorView<double> Get() const { return val.View(); }
     size_t DimX() const override { return val.Size(); }
@@ -202,7 +203,7 @@ namespace Neo_ODE
     {
       df = 0;
       fa->EvaluateDeriv(x.Range(firstx, nextx),
-                        df.Rows(firstf, nextf).Cols(firstx, nextx));      
+                        df.Rows(firstf, nextf).Cols(firstx, nextx));
     }
   };
 

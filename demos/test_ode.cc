@@ -29,8 +29,7 @@ class MassSpring : public NonlinearFunction
   }
 };
 
-
-int main()
+void test_mass_spring()
 {
   double tend = 4*M_PI;
   int steps = 100;
@@ -38,5 +37,35 @@ int main()
   auto rhs = make_shared<MassSpring>();
   
   SolveODE_IE(tend, steps, y, rhs,
-              [](double t, VectorView<double> y) { cout << t << "  " << y(0) << " " << y(1) << endl; });
+              [](double t, VectorView<double> y) { cout << "IE " << t << "  " << y(0) << " " << y(1) << endl; });
+  
+  SolveODE_EE(tend, steps, y, rhs,
+              [](double t, VectorView<double> y) { cout << "EE " << t << "  " << y(0) << " " << y(1) << endl; });
+  
+  SolveODE_CN(tend, steps, y, rhs,
+              [](double t, VectorView<double> y) { cout << "CN " << t << "  " << y(0) << " " << y(1) << endl; });
+}
+
+void test_exponential()
+{
+  Vector<> y{1, 0};
+  SolveODE_IE(0.5, 100, y, make_shared<ConstantFunction>(Vector<> {1, 2}),
+              [](double t, VectorView<double> y) { cout << "IE " << t << "  " << y(0) << " " << y(1) << endl; });
+  
+  y = {0, 1};
+
+  SolveODE_EE(0.5, 100, y, make_shared<ConstantFunction>(Vector<> {1, 2}),
+              [](double t, VectorView<double> y) { cout << "EE " << t << "  " << y(0) << " " << y(1) << endl; });
+  
+  y = {0, 1};
+
+  SolveODE_CN(0.5, 100, y, make_shared<ConstantFunction>(Vector<> {1, 2}),
+              [](double t, VectorView<double> y) { cout << "CN " << t << "  " << y(0) << " " << y(1) << endl; });
+}
+
+
+int main()
+{
+  //test_mass_spring();
+  test_exponential();
 }
