@@ -1,6 +1,8 @@
 
 build/
 */.ipynb_checkpoints
+_skbuild/
+Neoode.egg-info/
 
 # Prerequisites
 *.d

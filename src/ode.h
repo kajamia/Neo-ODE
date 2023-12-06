@@ -56,7 +56,7 @@ namespace Neo_ODE
     }
   }
 
-
+  // Crank-Nicholson method
   void SolveODE_CN(double tend, int steps,
                    VectorView<double> y, shared_ptr<NonlinearFunction> rhs,
                    std::function<void(double, VectorView<double>)> callback = nullptr)
