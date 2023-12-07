@@ -42,10 +42,10 @@ void test_mass_spring()
   SolveODE_IE(tend, steps, y, rhs,
               [](double t, VectorView<double> y) { cout << "IE " << t << "  " << y(0) << " " << y(1) << endl; });
   
-  /* SolveODE_EE(tend, steps, y, rhs,
+  SolveODE_EE(tend, steps, y, rhs,
               [](double t, VectorView<double> y) { cout << "EE " << t << "  " << y(0) << " " << y(1) << endl; });
   
-  SolveODE_CN(tend, steps, y, rhs,
+  /* SolveODE_CN(tend, steps, y, rhs,
               [](double t, VectorView<double> y) { cout << "CN " << t << "  " << y(0) << " " << y(1) << endl; }); */
 }
 
