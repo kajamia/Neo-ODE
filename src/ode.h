@@ -65,24 +65,13 @@ namespace Neo_ODE
     double dt = tend/steps;
     double t = 0;
 
-    // f(t_i, y_i)
-    Vector<double> tmp(y.Size());
-    auto tmpfunc = make_shared<ConstantFunction>(tmp);
-
     // set up equation
     auto yold = make_shared<ConstantFunction>(y); // y_i
     auto ynew = make_shared<IdentityFunction>(y.Size()); // y_{i+1}
-    auto equ = ynew-yold - (dt/2) * (tmpfunc + rhs);
+    auto equ = ynew-yold - (dt/2) * (Compose(rhs, yold) + Compose(rhs, ynew));
 
     for (int i = 0; i < steps; i++)
-    { 
-      // calculate f(t_i, y_i)
-      rhs->Evaluate(y, tmp);
-      tmp *= dt;
-      tmp += y;
-
-      // set up equation
-      equ = ynew-yold - (dt/2) * (tmpfunc + rhs);
+    {
       // solve equation
       NewtonSolver (equ, y);
       yold->Set(y);
