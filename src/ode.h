@@ -47,7 +47,7 @@ namespace Neo_ODE
 
     for (int i = 0; i < steps; i++)
     {
-      y(0) = t;
+      y(y.Size() - 1) = t;
       rhs->Evaluate(y, tmp);
       y = y + dt*tmp;
 

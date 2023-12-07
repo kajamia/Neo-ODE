@@ -58,11 +58,11 @@ Matrix<double, ColMajor> test_exponential_py()
 
   for (int i = 0; i < 100; i += 3)
   {
-    SolveODE_IE(0.5, 100, all_y.Col(i), make_shared<ConstantFunction>(Vector<> {1, 2}));
+    SolveODE_IE(0.5*100/i, i, all_y.Col(i), make_shared<ConstantFunction>(Vector<> {1, 2}));
 
-    SolveODE_EE(0.5, 100, all_y.Col(i + 1), make_shared<ConstantFunction>(Vector<> {1, 2}));
+    SolveODE_EE(0.5*100/i, i, all_y.Col(i + 1), make_shared<ConstantFunction>(Vector<> {1, 2}));
 
-    SolveODE_CN(0.5, 100, all_y.Col(i + 2), make_shared<ConstantFunction>(Vector<> {1, 2}));
+    SolveODE_CN(0.5*100/i, i, all_y.Col(i + 2), make_shared<ConstantFunction>(Vector<> {1, 2}));
   }
 
   return all_y;  
@@ -78,19 +78,19 @@ PYBIND11_MODULE(ode, m)
 
 void test_exponential()
 {
-  Vector<> y{0, 1};
-  SolveODE_IE(0.5, 100, y, make_shared<ConstantFunction>(Vector<> {1, 2}),
-              [](double t, VectorView<double> y) { cout << "IE " << t << "  " << y(0) << " " << y(1) << endl; });
+  Vector<> y{1, 0};
+  /* SolveODE_IE(0.5, 100, y, make_shared<ConstantFunction>(Vector<> {1, 2}),
+              [](double t, VectorView<double> y) { cout << "IE " << t << "  " << y(0) << " " << y(1) << endl; }); */
   
-  y = {0, 1};
+  y = {1, 0};
 
-  SolveODE_EE(0.5, 100, y, make_shared<ConstantFunction>(Vector<> {1, 2}),
-              [](double t, VectorView<double> y) { cout << "EE " << t << "  " << y(0) << " " << y(1) << endl; });
+  /* SolveODE_EE(0.5, 100, y, make_shared<ConstantFunction>(Vector<> {1, 2}),
+              [](double t, VectorView<double> y) { cout << "EE " << t << "  " << y(0) << " " << y(1) << endl; }); */
   
-  y = {0, 1};
+  y = {1, 0};
 
-  SolveODE_CN(0.5, 100, y, make_shared<ConstantFunction>(Vector<> {1, 2}),
-              [](double t, VectorView<double> y) { cout << "CN " << t << "  " << y(0) << " " << y(1) << endl; });
+  /* SolveODE_CN(0.5, 100, y, make_shared<ConstantFunction>(Vector<> {1, 2}),
+              [](double t, VectorView<double> y) { cout << "CN " << t << "  " << y(0) << " " << y(1) << endl; }); */
 }
 
 
