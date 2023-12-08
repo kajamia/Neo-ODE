@@ -33,6 +33,34 @@ namespace Neo_ODE
       }
   }
 
+  // implicit Euler method for dy/dt = rhs(y), full Matrix output
+  // the first row of all_y needs to hold the initial y value
+  void SolveODE_IE(double tend, int steps,
+                   MatrixView<> all_y, shared_ptr<NonlinearFunction> rhs,
+                   std::function<void(double,VectorView<double>)> callback = nullptr)
+  {
+    if (all_y.width() != rhs->DimF() || all_y.height() != steps) {throw invalid_argument("all_y does not have the right dimensions, maybe that it was ColMajor");}
+
+    double dt = tend/steps;
+    Vector<> y(all_y.width());
+    y = all_y.Row(0);
+
+    auto yold = make_shared<ConstantFunction>(y);
+    auto ynew = make_shared<IdentityFunction>(y.Size());
+    auto equ = ynew-yold - dt * rhs;
+
+    double t = 0;
+
+    for (int i = 0; i < steps; i++)
+      {
+        NewtonSolver (equ, y);
+        yold->Set(y);
+        t += dt;
+        if (callback) callback(t, y);
+        all_y.Row(i) = y;
+      }
+  }
+
   
   // explicit Euler method for dy/dt = rhs(y)
   void SolveODE_EE(double tend, int steps,
@@ -47,12 +75,36 @@ namespace Neo_ODE
 
     for (int i = 0; i < steps; i++)
     {
-      y(y.Size() - 1) = t;
       rhs->Evaluate(y, tmp);
       y = y + dt*tmp;
 
       t += dt;
       if (callback) callback(t, y);
+    }
+  }
+
+  // explicit Euler method for dy/dt = rhs(y)
+  // the first row of all_y needs to hold the initial y value
+  void SolveODE_EE(double tend, int steps,
+                   MatrixView<> all_y, shared_ptr<NonlinearFunction> rhs,
+                   std::function<void(double, VectorView<double>)> callback = nullptr)
+  {
+    double dt = tend/steps;
+    if (all_y.width() != rhs->DimF() || all_y.height() != steps) {throw invalid_argument("all_y does not have the right dimensions, maybe that it was ColMajor");}
+
+    double t = 0;
+    Vector<double> y(all_y.width());
+    y = all_y.Row(0);
+    Vector<double> tmp(y.Size());
+
+    for (int i = 0; i < steps; i++)
+    {
+      rhs->Evaluate(y, tmp);
+      y = y + dt*tmp;
+
+      t += dt;
+      if (callback) callback(t, y);
+      all_y.Row(i) = y;
     }
   }
 
@@ -78,6 +130,37 @@ namespace Neo_ODE
 
       t += dt;
       if (callback) callback(t, y);
+    }
+  }
+
+  // Crank-Nicholson method
+  // the first row of all_y needs to hold the initial y value
+  void SolveODE_CN(double tend, int steps,
+                   MatrixView<> all_y, shared_ptr<NonlinearFunction> rhs,
+                   std::function<void(double,VectorView<double>)> callback = nullptr)
+  {
+    if (all_y.width() != rhs->DimF() || all_y.height() != steps) {throw invalid_argument("all_y does not have the right dimensions, maybe that it was ColMajor");}
+    
+    // h
+    double dt = tend/steps;
+    double t = 0;
+    Vector<> y(all_y.width());
+    y = all_y.Row(0);
+
+    // set up equation
+    auto yold = make_shared<ConstantFunction>(y); // y_i
+    auto ynew = make_shared<IdentityFunction>(y.Size()); // y_{i+1}
+    auto equ = ynew-yold - (dt/2) * (Compose(rhs, yold) + Compose(rhs, ynew));
+
+    for (int i = 0; i < steps; i++)
+    {
+      // solve equation
+      NewtonSolver (equ, y);
+      yold->Set(y);
+
+      t += dt;
+      if (callback) callback(t, y);
+      all_y.Row(i) = y;
     }
   }
   
