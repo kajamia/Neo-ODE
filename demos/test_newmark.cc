@@ -18,7 +18,7 @@ class RHS : public NonlinearFunction
   }
   void EvaluateDeriv (VectorView<double> x, MatrixView<double> df) const override
   {
-    df(0) = -1;
+    df(0, 0) = -1;
   }
 };
 
@@ -31,7 +31,7 @@ int main()
   Vector<> dx { 0., };
   auto rhs = make_shared<RHS>();
   auto mass = make_shared<IdentityFunction>(1);
-  SolveODE_Newmark(tend, steps, x(0), dx, rhs, mass,
+  SolveODE_Newmark(tend, steps, x, dx, rhs, mass,
                    [](double t, VectorView<double> x) { cout << "t = " << t << ", x = " << x(0) << endl; }
                    );
 }

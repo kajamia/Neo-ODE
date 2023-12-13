@@ -27,11 +27,11 @@ pybind11_add_module(ode demos/bind_test_ode.cc)
 install (TARGETS ode DESTINATION Neoode)
 
 
-# add_executable (test_newmark demos/test_newmark.cc)
+add_executable (test_newmark demos/test_newmark.cc)
 # target_link_libraries (test_newmark PUBLIC ngbla)
 
 add_executable (test_alpha demos/test_alpha.cc)
 # target_link_libraries (test_alpha PUBLIC ngbla)
 
 
-# add_subdirectory (mass_spring)
+add_subdirectory (mass_spring)

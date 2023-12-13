@@ -8,8 +8,8 @@
 
 using namespace Neo_ODE;
 
-#include <vector.hpp>
-using namespace ngbla;
+#include <vector.h>
+using namespace Neo_CLA;
 
 
 
