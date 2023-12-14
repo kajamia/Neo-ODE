@@ -1,8 +1,8 @@
 import sys
-sys.path.append('/Users/joachim/texjs/lva/ws2324/ScientificComputing/ASC-ODE/build/mass_spring')
+sys.path.append('../build/mass_spring')
 
-from mass_spring import *
-import ngsolve.bla
+from Neoode.mass_spring import *
+# import ngsolve.bla
 
 
 mss = MassSpringSystem3d()
