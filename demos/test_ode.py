@@ -28,14 +28,16 @@ plt.show()
 
 # generic alpha
 
-all_y = test_alpha()
+all_y = np.array(100, 3)
+tend = 2*2*np.pi
+steps = 100
+x  = Vector(3)
+dx  = Vector(3)
+ddx  = Vector(3)
 
-r1 = all_y[:, 0]
-r2 = all_y[:, 1]
-r3 = all_y[:, 2]
+rhs = dLagrange()
+mass = Projector(3, 0, 2)
 
-plt.plot(t, r1)
-plt.plot(t, r2)
-plt.plot(t, r3)
-
-plt.show()
+for i in range(100):
+    SolveODE_Alpha(tend, steps, 0.8, x, dx, ddx, rhs, mass)
+    

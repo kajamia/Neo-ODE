@@ -81,27 +81,31 @@ Matrix<> test_mass_spring()
   return all_y;  
 }
 
-Matrix<> test_alpha_py()
+/* Matrix<> test_alpha_py()
 {
-  Matrix<double> all_y(100, 3);
-
   double tend = 2*2*M_PI;
   double steps = 100;
-  double timestep = tend/steps;
+
+  Matrix<double> all_y(steps, 3);
   Vector<double> x { 1, 0, 0, };
   Vector<double> dx { 0, 0, 0 };
   Vector<double> ddx { 0, 0, 0 };
+
   auto rhs = make_shared<dLagrange>();
   auto mass = make_shared<Projector>(3, 0, 2);
 
-  for (int j=0; j < 100; j++){
-    SolveODE_Alpha (tend, steps, 0.8, x, dx, ddx, rhs, mass);
+  for (int j=0; j < steps; j++){
+    SolveODE_Alpha (tend*(j/50), steps, 0.8, x, dx, ddx, rhs, mass);
     all_y.Row(j) = x;
 
-    tend -= timestep;
+    x = { 1, 0, 0, };
+    dx = { 0, 0, 0 };
+
   }
   return all_y;
-}
+} */
+
+
 
 
 
@@ -109,8 +113,10 @@ PYBIND11_MODULE(ode, m)
 {
   m.doc() = "just a test of ode methods";
 
+  // https://pybind11.readthedocs.io/en/stable/advanced/smart_ptrs.html
   m.def("test_mass_spring", &test_mass_spring);
-  m.def("test_alpha", &test_alpha_py);
+  // m.def("test_alpha", &test_alpha_py);
+  m.def("SolveODE_Alpha", &SolveODE_Alpha);
 
 }
 
