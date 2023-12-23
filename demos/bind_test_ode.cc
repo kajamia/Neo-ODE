@@ -9,6 +9,7 @@
 using namespace Neo_ODE;
 using namespace Neo_CLA;
 using namespace std;
+namespace py = pybind11;
 
 
 class MassSpring : public NonlinearFunction
@@ -81,33 +82,6 @@ Matrix<> test_mass_spring()
   return all_y;  
 }
 
-/* Matrix<> test_alpha_py()
-{
-  double tend = 2*2*M_PI;
-  double steps = 100;
-
-  Matrix<double> all_y(steps, 3);
-  Vector<double> x { 1, 0, 0, };
-  Vector<double> dx { 0, 0, 0 };
-  Vector<double> ddx { 0, 0, 0 };
-
-  auto rhs = make_shared<dLagrange>();
-  auto mass = make_shared<Projector>(3, 0, 2);
-
-  for (int j=0; j < steps; j++){
-    SolveODE_Alpha (tend*(j/50), steps, 0.8, x, dx, ddx, rhs, mass);
-    all_y.Row(j) = x;
-
-    x = { 1, 0, 0, };
-    dx = { 0, 0, 0 };
-
-  }
-  return all_y;
-} */
-
-
-
-
 
 PYBIND11_MODULE(ode, m)
 {
@@ -115,8 +89,6 @@ PYBIND11_MODULE(ode, m)
 
   // https://pybind11.readthedocs.io/en/stable/advanced/smart_ptrs.html
   m.def("test_mass_spring", &test_mass_spring);
-  // m.def("test_alpha", &test_alpha_py);
-  m.def("SolveODE_Alpha", &SolveODE_Alpha);
 
 }
 
