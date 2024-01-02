@@ -230,6 +230,48 @@ namespace Neo_ODE
     }
   };
 
+
+  // broadcasts n-dimensional input to n*s-dimensional output
+  class BlockFunction : public NonlinearFunction
+  {
+    shared_ptr<NonlinearFunction> comp_;
+    size_t size_;
+    size_t cdimx;
+    size_t cdimf;
+    
+   public:
+    BlockFunction(shared_ptr<NonlinearFunction> component, size_t size)
+      : comp_(component), size_(size), cdimx(comp_->DimX()), cdimf(comp_->DimF()) {}
+
+    size_t DimX() const override {return cdimx;}
+    size_t DimF() const override {return size_*cdimf;}
+
+    void Evaluate (VectorView<double> x, VectorView<double> f) const override
+    {
+      for (size_t j=0; j < size_; j++){
+        comp_->Evaluate(x, f.Range(j*(cdimf), (j + 1)*(cdimf)));
+      }
+    }
+    void EvaluateDeriv (VectorView<double> x, MatrixView<double> df)
+    {
+      comp_->EvaluateDeriv(x, df.Cols(0, cdimx));
+      for (size_t j=1; j < size_; j++){
+        df.Cols(j*cdimx, cdimx) = df.Cols(0, cdimx);
+      }
+    }
+  };
+
+
+  /*  
+  class BlockMatVec : public NonlinearFunction
+  {
+    MatrixView A_;
+
+   public:
+    BlockMatVec (MatrixView A) : A_(A) {}
+    
+  }; */
+
   
 }
 

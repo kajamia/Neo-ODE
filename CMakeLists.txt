@@ -10,7 +10,7 @@ add_subdirectory (src)
 add_executable (test_ode demos/test_ode.cc)
 # target_link_libraries (test_ode PUBLIC ngbla)
 
-set(CMAKE_BUILD_TYPE Debug)
+# set(CMAKE_BUILD_TYPE Debug)
 
 
 # test_exponential from test_ode for Python

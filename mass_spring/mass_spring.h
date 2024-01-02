@@ -126,11 +126,11 @@ ostream & operator<< (ostream & ost, MassSpringSystem<D> & mss)
   ost << "fixes:" << endl;
   for (auto f : mss.Fixes())
     ost << f.pos << endl;
-
+  
   ost << "masses: " << endl;
   for (auto m : mss.Masses())
     ost << "m = " << m.mass << ", pos = " << m.pos << endl;
-
+  
   ost << "springs: " << endl;
   for (auto sp : mss.Springs())
     ost << "length = " << sp.length << "stiffness = " << sp.stiffness

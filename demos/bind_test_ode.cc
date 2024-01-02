@@ -9,6 +9,7 @@
 using namespace Neo_ODE;
 using namespace Neo_CLA;
 using namespace std;
+namespace py = pybind11;
 
 
 class MassSpring : public NonlinearFunction
@@ -27,6 +28,38 @@ class MassSpring : public NonlinearFunction
     df = 0.0;
     df(0,1) = 1;
     df(1,0) = -1;
+  }
+};
+
+// the pendulum with a length constraint
+
+// Lagrange = -f*y + lam*(x*x+y*y-1)
+// dLagrange
+class dLagrange : public NonlinearFunction
+{
+  size_t DimX() const override { return 3; }
+  size_t DimF() const override { return 3; }
+  
+  void Evaluate (VectorView<double> x, VectorView<double> f) const override
+  {
+    f(0) = 2*x(0)*x(2);
+    f(1) = 2*x(1)*x(2) - 1;
+    f(2) = x(0)*x(0)+x(1)*x(1)-1;
+    
+  }
+  void EvaluateDeriv (VectorView<double> x, MatrixView<double> df) const override
+  {
+    df(0,0) = 2*x(2);
+    df(0,1) = 0;
+    df(0,2) = 2*x(0);
+
+    df(1,0) = 0;
+    df(1,1) = 2*x(2);
+    df(1,2) = 2*x(1);
+
+    df(2,0) = 2*x(0);
+    df(2,1) = 2*x(1);
+    df(2,2) = 0;
   }
 };
 
@@ -49,10 +82,13 @@ Matrix<> test_mass_spring()
   return all_y;  
 }
 
+
 PYBIND11_MODULE(ode, m)
 {
   m.doc() = "just a test of ode methods";
 
+  // https://pybind11.readthedocs.io/en/stable/advanced/smart_ptrs.html
   m.def("test_mass_spring", &test_mass_spring);
+
 }
 
