@@ -122,6 +122,7 @@ public:
 template <int D>
 ostream & operator<< (ostream & ost, MassSpringSystem<D> & mss)
 {
+  
   ost << "fixes:" << endl;
   for (auto f : mss.Fixes())
     ost << f.pos << endl;
