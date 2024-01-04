@@ -29,8 +29,8 @@ int main()
   
   mss.GetState (x, dx, ddx);
   
-  /*SolveODE_Newmark(tend, steps, x, dx,  mss_func, mass,
+  SolveODE_Newmark(tend, steps, x, dx,  mss_func, mass,
                    [](double t, VectorView<double> x) { cout << "t = " << t
                                                              << ", x = " << Vec<4>(x) << endl; });
-  */
+ 
 }
