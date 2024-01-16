@@ -39,7 +39,7 @@ namespace Neo_ODE
                    MatrixView<> all_y, shared_ptr<NonlinearFunction> rhs,
                    std::function<void(double,VectorView<double>)> callback = nullptr)
   {
-    if (all_y.width() != rhs->DimF() || all_y.height() != steps) {throw invalid_argument("all_y does not have the right dimensions, maybe that it was ColMajor");}
+    if (all_y.width() != rhs->DimF() || all_y.height() != steps) {throw std::invalid_argument("all_y does not have the right dimensions, maybe that it was ColMajor");}
 
     double dt = tend/steps;
     Vector<> y(all_y.width());
@@ -68,7 +68,7 @@ namespace Neo_ODE
                    std::function<void(double, VectorView<double>)> callback = nullptr)
   {
     double dt = tend/steps;
-    if (rhs->DimX() != y.Size() || rhs->DimX() != y.Size()){throw invalid_argument("rhs does not have the right dimensions"); }
+    if (rhs->DimX() != y.Size() || rhs->DimX() != y.Size()){throw std::invalid_argument("rhs does not have the right dimensions"); }
 
     double t = 0;
     Vector<double> tmp(y.Size());
@@ -90,7 +90,7 @@ namespace Neo_ODE
                    std::function<void(double, VectorView<double>)> callback = nullptr)
   {
     double dt = tend/steps;
-    if (all_y.width() != rhs->DimF() || all_y.height() != steps) {throw invalid_argument("all_y does not have the right dimensions, maybe that it was ColMajor");}
+    if (all_y.width() != rhs->DimF() || all_y.height() != steps) {throw std::invalid_argument("all_y does not have the right dimensions, maybe that it was ColMajor");}
 
     double t = 0;
     Vector<double> y(all_y.width());
@@ -139,7 +139,7 @@ namespace Neo_ODE
                    MatrixView<> all_y, shared_ptr<NonlinearFunction> rhs,
                    std::function<void(double,VectorView<double>)> callback = nullptr)
   {
-    if (all_y.width() != rhs->DimF() || all_y.height() != steps) {throw invalid_argument("all_y does not have the right dimensions, maybe that it was ColMajor");}
+    if (all_y.width() != rhs->DimF() || all_y.height() != steps) {throw std::invalid_argument("all_y does not have the right dimensions, maybe that it was ColMajor");}
     
     // h
     double dt = tend/steps;

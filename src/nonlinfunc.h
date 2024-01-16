@@ -2,6 +2,7 @@
 #define NONLINFUNC_H
 
 #include <memory>
+#include <functional>
 
 #include <vector.h>
 #include <matrix.h>
@@ -10,7 +11,9 @@
 namespace Neo_ODE
 {
   using namespace Neo_CLA;
-  using namespace std;
+  // using namespace std;
+  using std::shared_ptr;
+  using std::make_shared;
 
   class NonlinearFunction
   {
@@ -272,6 +275,40 @@ namespace Neo_ODE
     
   }; */
 
+  
+  /* class Sine: public NonlinearFunction
+  {
+    size_t _n;
+    
+   public:
+    Sine (size_t n) : _n(n) {};
+    size_t DimX() const override { return _n; }
+    size_t DimF() const override { return _n; }
+    void Evaluate(VectorView<double> x, VectorView<double> f) const override
+    {
+      for (size_t i=0; i < _n; i++){
+        f(i) = std::sin(x(i));
+      }
+    }
+    void EvaluateDeriv (VectorView<double> x, MatrixView<double> df) const override
+    {
+      for (size_t i=0; i < _n; i++){
+        for (size_t j=0; j < _n; j++)
+        {
+          if (i==j){
+            df(i, j) = std::cos(x(i));
+          }
+          else
+            df(i, j) = 0;
+        }
+      }
+    }
+  };
+
+  inline auto sin (shared_ptr<NonlinearFunction> f)
+  {
+    return make_shared<ComposeFunction> (make_shared<Sine>((*f).DimF()), f);
+  } */
   
 }
 

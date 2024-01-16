@@ -1,5 +1,6 @@
 #include "mass_spring.h"
 
+using namespace std;
 
 int main()
 {

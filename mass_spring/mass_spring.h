@@ -40,7 +40,7 @@ public:
   size_t nr;
 };
 
-ostream & operator<< (ostream & ost, const Connector & con)
+std::ostream & operator<< (std::ostream & ost, const Connector & con)
 {
   ost << "type = " << int(con.type) << ", nr = " << con.nr;
   return ost;
@@ -120,21 +120,21 @@ public:
 };
 
 template <int D>
-ostream & operator<< (ostream & ost, MassSpringSystem<D> & mss)
+std::ostream & operator<< (std::ostream & ost, MassSpringSystem<D> & mss)
 {
   
-  ost << "fixes:" << endl;
+  ost << "fixes:" << std::endl;
   for (auto f : mss.Fixes())
-    ost << f.pos << endl;
+    ost << f.pos << std::endl;
   
-  ost << "masses: " << endl;
+  ost << "masses: " << std::endl;
   for (auto m : mss.Masses())
-    ost << "m = " << m.mass << ", pos = " << m.pos << endl;
+    ost << "m = " << m.mass << ", pos = " << m.pos << std::endl;
   
-  ost << "springs: " << endl;
+  ost << "springs: " << std::endl;
   for (auto sp : mss.Springs())
     ost << "length = " << sp.length << "stiffness = " << sp.stiffness
-        << ", C1 = " << sp.connections[0] << ", C2 = " << sp.connections[1] << endl;
+        << ", C1 = " << sp.connections[0] << ", C2 = " << sp.connections[1] << std::endl;
   return ost;
 }
 
