@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/test_newmark.dir/test_newmark.cc.o -o test_newmark 

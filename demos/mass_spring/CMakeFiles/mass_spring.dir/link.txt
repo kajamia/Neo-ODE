@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC -flto -shared  -o mass_spring.cpython-310-x86_64-linux-gnu.so CMakeFiles/mass_spring.dir/bind_mass_spring.cc.o 

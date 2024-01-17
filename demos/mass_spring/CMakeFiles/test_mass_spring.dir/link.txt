@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/test_mass_spring.dir/mass_spring.cc.o -o test_mass_spring 
