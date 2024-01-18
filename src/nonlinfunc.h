@@ -304,19 +304,19 @@ namespace Neo_ODE
     MatVecFunc (Matrix<> _a, size_t _n)
       : a(_a), n(_n) { }
 
-    virtual size_t DimX() const { return n*a.Height(); } 
-    virtual size_t DimF() const { return n*a.Width(); }
+    virtual size_t DimX() const { return n*a.height(); } 
+    virtual size_t DimF() const { return n*a.width(); }
     virtual void Evaluate (VectorView<double> x, VectorView<double> f) const
     {
-      MatrixView<> mx(a.Width(), n, n, x.Data());
-      MatrixView<> mf(a.Height(), n, n, f.Data());
+      MatrixView<> mx(a.width(), n, n, x.Data());
+      MatrixView<> mf(a.height(), n, n, f.Data());
       mf = a * mx;
     }
     virtual void EvaluateDeriv (VectorView<double> x, MatrixView<double> df) const
     {
       df = 0.0;
-      for (size_t i = 0; i < a.Height(); i++)
-        for (size_t j = 0; j < a.Width(); j++)
+      for (size_t i = 0; i < a.height(); i++)
+        for (size_t j = 0; j < a.width(); j++)
           df.Rows(i*n, (i+1)*n).Cols(j*n, (j+1)*n).Diag() = a(i,j);
     }
   };
@@ -370,6 +370,6 @@ namespace Neo_ODE
     return make_shared<ComposeFunction> (make_shared<Sine>((*f).DimF()), f);
   } */
   
-}
+
 
 #endif
