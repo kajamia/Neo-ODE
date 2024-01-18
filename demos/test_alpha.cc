@@ -87,11 +87,16 @@ int main()
 {
   double tend = 2*2*M_PI;
   double steps = 1000;
-  Vector<double> x { 1, 0, 2, 0, 0, 0 };
+  /* Vector<double> x { 1, 0, 2, 0, 0, 0 };
   Vector<double> dx { 0, 0, 0, 0, 0, 0 };
   Vector<double> ddx { 0, 0, 0, 0, 0, 0 };
   auto rhs = make_shared<dLagrangeDoublePendulum>();
-  auto mass = make_shared<Projector>(6, 0, 4);
+  auto mass = make_shared<Projector>(6, 0, 4); */
+  Vector<double> x { 1, 0, 0 };
+  Vector<double> dx { 0, 0, 0 };
+  Vector<double> ddx { 0, 0, 0 };
+  auto rhs = make_shared<dLagrange>();
+  auto mass = make_shared<Projector>(3, 0, 2);
 
   
   
